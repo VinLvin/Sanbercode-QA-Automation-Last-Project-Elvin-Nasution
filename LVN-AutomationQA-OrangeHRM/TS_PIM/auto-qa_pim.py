@@ -9,9 +9,9 @@ from selenium.webdriver.common.action_chains import ActionChains
 class TestPim(unittest.TestCase):
     
     #Note!!! Wajib ganti username setiap melakukan sekali test
-    firstname = "coba2"
+    firstname = "Kevin Test 2"
     lastname = "Nasution"
-    username = "aavintest1"
+    username = "aavintest2"
     password = "admin123"
 
     def setUp(self):
@@ -30,7 +30,7 @@ class TestPim(unittest.TestCase):
         driver.find_element(By.ID,"btnLogin").click() # klik tombol sign in
         time.sleep(1)
 
-        #Line Code Navigasi ke Menu Add User
+        #Line Code Navigasi ke Menu Employee List
         b_pim = driver.find_element(By.ID, "menu_pim_viewPimModule")
         b_view_e = driver.find_element(By.ID,"menu_pim_viewEmployeeList")
      
@@ -52,52 +52,50 @@ class TestPim(unittest.TestCase):
         time.sleep(1)
 
         #validasi
-        response_firstname = driver.find_element(By.ID,'personal_txtEmpFirstName').value_of_css_property('value')
-        response_lastname = driver.find_element(By.ID,'personal_txtEmpLastName').value_of_css_property('value')
+        response_firstname = driver.find_element(By.ID,'personal_txtEmpFirstName').get_attribute('value')
+        response_lastname = driver.find_element(By.ID,'personal_txtEmpLastName').get_attribute('value')
         
         self.assertEqual(TestPim.firstname, response_firstname)
         self.assertEqual(TestPim.lastname, response_lastname)
 
-    # def test_delete_employee (self):
+    def test_delete_employee (self):
        
-    #     driver = self.driver #buka web driver
-    #     driver.get("https://opensource-demo.orangehrmlive.com/") # buka situs
-    #     time.sleep(2)
-    #     driver.find_element(By.ID,"txtUsername").send_keys("admin") # isi email
-    #     time.sleep(1)
-    #     driver.find_element(By.ID,"txtPassword").send_keys("admin123") # isi password
-    #     time.sleep(1)
-    #     driver.find_element(By.ID,"btnLogin").click() # klik tombol sign in
-    #     time.sleep(1)
+        driver = self.driver #buka web driver
+        driver.get("https://opensource-demo.orangehrmlive.com/") # buka situs
+        time.sleep(2)
+        driver.find_element(By.ID,"txtUsername").send_keys("admin") # isi email
+        time.sleep(1)
+        driver.find_element(By.ID,"txtPassword").send_keys("admin123") # isi password
+        time.sleep(1)
+        driver.find_element(By.ID,"btnLogin").click() # klik tombol sign in
+        time.sleep(1)
 
-    #     #Line Code Navigasi ke Menu Add User
-    #     b_pim = driver.find_element(By.ID, "menu_admin_viewAdminModule")
-    #     b_view_e = driver.find_element(By.ID,"menu_admin_UserManagement")
-    #     b_view_user = driver.find_element(By.ID,"menu_admin_viewSystemUsers")
+        #Line Code Navigasi ke Menu Employee List
+        b_pim = driver.find_element(By.ID, "menu_pim_viewPimModule")
+        b_view_e = driver.find_element(By.ID,"menu_pim_viewEmployeeList")
+     
+        a = ActionChains(driver)
+        a.move_to_element(b_pim).perform()
+        a.click(b_view_e).perform()
+        time.sleep(1)
 
-    #     a = ActionChains(driver)
-    #     a.move_to_element(b_pim).perform()
-    #     a.move_to_element(b_view_e).perform()
-    #     a.click(b_view_user).perform()
-    #     time.sleep(1)
 
-    
-    #     driver.find_element(By.ID,"searchSystemUser_userName").send_keys(TestPim.username)
-    #     time.sleep(1)
-    #     driver.find_element(By.ID,"searchBtn").click()
-    #     time.sleep(1)
-    #     driver.find_element(By.NAME,"chkSelectRow[]").click()
-    #     time.sleep(1)
-    #     driver.find_element(By.ID,"btnDelete").click()
-    #     time.sleep(1)
+        driver.find_element(By.ID,"empsearch_employee_name_empName").send_keys(TestPim.firstname)
+        time.sleep(1)
+        driver.find_element(By.ID,"searchBtn").click()
+        time.sleep(1)
+        driver.find_element(By.NAME,"chkSelectRow[]").click()
+        time.sleep(1)
+        driver.find_element(By.ID,"btnDelete").click()
+        time.sleep(1)
         
-    #     #Tombol OK
-    #     driver.find_element(By.ID,"dialogDeleteBtn").click()
-    #     time.sleep(1)
+        #Tombol OK
+        driver.find_element(By.ID,"dialogDeleteBtn").click()
+        time.sleep(1)
 
-    #     #validasi
-    #     response_message = driver.find_element(By.TAG_NAME,'body').text
-    #     self.assertIn('Successfully Deleted', response_message)    
+        #validasi
+        response_message = driver.find_element(By.TAG_NAME,'body').text
+        self.assertIn('Successfully Deleted', response_message)    
 
     def tearDown(self):
         self.driver.close()
